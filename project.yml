@@ -2,7 +2,9 @@
 project:
   name: "grails-export"
   title: "Grails Export Plugin"
-  description: "This plugin offers export functionality supporting different formats e.g. CSV, Excel, Open Document Spreadsheet, PDF and XML and can be extended to add additional formats."
+  description: "This plugin offers export functionality supporting different formats\
+    \ e.g. CSV, Excel, Open Document Spreadsheet, PDF and XML and can be extended\
+    \ to add additional formats."
   org: "Grails Plugin Collective (GPC)"
 github:
   org: "gpc"
