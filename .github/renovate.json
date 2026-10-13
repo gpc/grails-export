@@ -17,7 +17,7 @@
       "(^|/)build\\.gradle$",
       "(^|/)settings\\.gradle$",
       "(^|/)gradle\\.properties$",
-      "build-logic/src/main/groovy/.*\\.gradle$"
+      "conventions/(src/main/groovy/.*\\.gradle|build\\.gradle|gradle\\.properties)$"
     ]
   },
   "gradle-wrapper": {
