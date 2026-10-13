@@ -8,32 +8,38 @@ Open Document Spreadsheet, PDF and XML and can be extended to add additional for
 - **Language:** Groovy 4.0.30 on Java 17
 - **Framework:** Grails 7.x
 - **Build System:** Gradle 8.14.4 (with wrapper)
-- **Current Version:** 7.0.x-SNAPSHOT
+- **Current Version:** see `projectVersion` in `gradle.properties`
 - **License:** Apache 2.0
 
 ## Skill Files (Best Practices)
 
-Detailed best practices are documented in `.skills/`:
+Detailed best practices are documented as agent skills in `.agents/skills/` (`.claude` is a symlink to `.agents`).
+They are synced from [grails-plugin-template](https://github.com/grails-plugins/grails-plugin-template) — do not edit
+them here.
 
-| Skill File                                                             | Purpose                                               |
-|------------------------------------------------------------------------|-------------------------------------------------------|
-| [`.skills/repository-structure.md`](.skills/repository-structure.md)   | Canonical directory layout and architectural rules    |
-| [`.skills/gradle-best-practices.md`](.skills/gradle-best-practices.md) | Gradle best practices, convention plugins, and idioms |
-| [`.skills/plugin-project.md`](.skills/plugin-project.md)               | Plugin project scope: source code + unit tests only   |
-| [`.skills/example-apps.md`](.skills/example-apps.md)                   | Example app patterns: integration & functional tests  |
+| Skill File                                                                                           | Purpose                                               |
+|------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| [`.agents/skills/repository-structure/SKILL.md`](.agents/skills/repository-structure/SKILL.md)       | Canonical directory layout and architectural rules    |
+| [`.agents/skills/gradle-best-practices/SKILL.md`](.agents/skills/gradle-best-practices/SKILL.md)     | Gradle best practices, convention plugins, and idioms |
+| [`.agents/skills/plugin-project/SKILL.md`](.agents/skills/plugin-project/SKILL.md)                   | Plugin project scope: source code + unit tests only   |
+| [`.agents/skills/example-apps/SKILL.md`](.agents/skills/example-apps/SKILL.md)                       | Example app patterns: integration & functional tests  |
+
+The skills describe a local `conventions/` composite build. This repository does not have one — it consumes the
+convention plugins as a published artifact instead (see [Convention Plugins](#convention-plugins)).
 
 **Read these skill files before making structural changes to the repository.**
 
 ## Critical Rules
 
 1. **NEVER add code to the root `build.gradle` to configure subprojects.** No `subprojects {}`, `allprojects {}`, or
-   `configure()` blocks. All shared configuration goes through convention plugins in `build-logic/`.
+   `configure()` blocks. All shared configuration goes through the `config.*` convention plugins.
 2. **The plugin project contains ONLY plugin code and unit tests.** No integration tests, no functional tests, no
    example controllers or views.
 3. **Example apps under `examples/` host all integration and functional tests.** They depend on the plugin via
    `implementation project(':grails-export')` and test it as a real consumer would.
-4. **Use Gradle convention plugins to deduplicate.** If two or more subprojects share build logic, extract it into a
-   convention plugin in `build-logic/`.
+4. **Use Gradle convention plugins to deduplicate.** If two or more subprojects share build logic, it belongs in a
+   convention plugin in [grails-plugin-template](https://github.com/grails-plugins/grails-plugin-template)'s
+   `conventions/` build, not in this repository.
 5. **Always use lazy Gradle APIs** to avoid eager initialization (`tasks.register()`, `tasks.named()`, `configureEach`,
    `provider {}`).
 
@@ -41,18 +47,19 @@ Detailed best practices are documented in `.skills/`:
 
 ```
 export/
-├── .skills/             # Best practice skill files
+├── .agents/skills/      # Agent skills (synced from grails-plugin-template; `.claude` -> `.agents`)
 ├── plugin/              # Core Grails plugin (artifact: grails-export)
 │   ├── grails-app/      #   Plugin services, taglibs, and conf
 │   └── src/main/        #   Plugin source code (exporters, builder, etc.)
 ├── examples/app1/       # Example Grails app
 │   └── grails-app/      #   Controllers and conf for integration testing
 ├── docs/                # Asciidoctor documentation
-├── build-logic/         # Gradle convention plugins (composite build)
-├── .github/workflows/   # CI, release, and release-notes workflows
+├── .github/workflows/   # CI, release, release-notes, update-contributors, update-versions workflows
+├── .github/scripts/     # Scripts used by the workflows (verify-repository, update-versions, ...)
 ├── build.gradle         # Root build file (docs + root-publish ONLY)
-├── settings.gradle      # Multi-project settings
-└── gradle.properties    # Version properties
+├── settings.gradle      # Multi-project settings; maps `config.*` plugins to grails-plugin-conventions
+├── gradle.properties    # Version, group and build properties
+└── project.yml          # Project metadata: POM info, docs index, contributors, released versions
 ```
 
 ## Build and Test Commands
@@ -79,11 +86,11 @@ export/
 # Clean build
 ./gradlew clean build
 
-# Run code style checks only
-./gradlew codeStyle
+# Publish to the local Maven repository (~/.m2)
+./gradlew publishToMavenLocal
 
-# Skip code style checks
-./gradlew build -PskipCodeStyle
+# Verify the repository layout (same check as the CI "Verify Repository" job)
+groovy .github/scripts/verify-repository.groovy
 ```
 
 ## SDK Requirements
@@ -165,21 +172,38 @@ Unit tests use the **Spock Framework** and run on JUnit Platform.
 The `TestController` in the example app exercises `ExportService` with real format requests. Integration and
 functional tests added here depend on the plugin as a real consumer would.
 
-## Build-Logic Convention Plugins
+## Project Metadata
 
-Convention plugins in `build-logic/src/main/groovy/` standardize build configuration:
+`project.yml` is the single source of project metadata. `config.publish` (via `config.project-metadata`) builds the
+Maven POM from it — title, description, organization, license, GitHub slug and developers (from `contributors`) — so
+do not add a manual `GrailsPublishExtension` block to `plugin/build.gradle`. It also drives the gh-pages version index
+(`docs/src/docs/index.tmpl`).
 
-| Plugin                   | Purpose                                                                              |
-|--------------------------|--------------------------------------------------------------------------------------|
-| `app-run.gradle`         | Debug flags for `bootRun`                                                            |
-| `compile.gradle`         | Java/Groovy compilation settings (UTF-8, incremental, Java release from `.sdkmanrc`) |
-| `docs.gradle`            | Documentation aggregation (Groovydoc + Asciidoctor)                                  |
-| `example-app.gradle`     | Example app config (grails-web, GSP, assets)                                         |
-| `grails-assets.gradle`   | Asset pipeline with Bootstrap/jQuery WebJars                                         |
-| `grails-plugin.gradle`   | Grails plugin application                                                            |
-| `publish.gradle`         | Per-project Maven publishing metadata                                                |
-| `publish-root.gradle`    | Root-level Nexus publishing workaround                                               |
-| `testing.gradle`         | Test framework config (Spock, JUnit Platform, test-logger)                           |
+The `contributors` and `versions` blocks are maintained by the `update-contributors` and `update-versions` workflows.
+
+The Maven group comes from `projectGroup` in `gradle.properties` (`group = projectGroup` in `plugin/build.gradle`).
+
+## Convention Plugins
+
+The `config.*` convention plugins are not part of this repository. `settings.gradle` resolves every plugin id starting
+with `config.` to `org.grails.plugins.gradle:grails-plugin-conventions`, published from the `conventions/` build in
+[grails-plugin-template](https://github.com/grails-plugins/grails-plugin-template). Changes to shared build logic
+go there.
+
+Plugins used in this repository:
+
+| Plugin                  | Applied in               | Purpose                                                                              |
+|-------------------------|--------------------------|--------------------------------------------------------------------------------------|
+| `config.compile`        | `plugin/`                | Java/Groovy compilation settings (UTF-8, incremental, Java release from `.sdkmanrc`) |
+| `config.grails-plugin`  | `plugin/`                | Applies the Grails plugin Gradle plugin, disables Spring dependency management       |
+| `config.publish`        | `plugin/`                | Maven publishing metadata from `project.yml` (applies `config.project-metadata`)     |
+| `config.testing`        | `plugin/`                | Test framework config (Spock, JUnit Platform, test-logger)                           |
+| `config.example-app`    | `examples/app1/`         | Example app config (app-run, compile, grails-assets, testing, grails-web, GSP)       |
+| `config.docs`           | root `build.gradle`      | Documentation aggregation (Groovydoc + Asciidoctor)                                  |
+| `config.publish-root`   | root `build.gradle`      | Root-level Nexus publishing workaround                                               |
+
+The artifact also provides `config.code-style`, `config.code-coverage`, `config.code-coverage-aggregate` and
+`config.grails-web-plugin`, which this repository does not apply yet.
 
 ## CI/CD
 
@@ -189,6 +213,11 @@ Convention plugins in `build-logic/src/main/groovy/` standardize build configura
   to Maven Central, publish docs to GitHub Pages, bump version.
 - **Release Notes** (`.github/workflows/release-notes.yml`): Auto-drafts release notes using release-drafter with
   category labels.
+- **Update Contributors / Update Versions** (`.github/workflows/update-contributors.yml`, `update-versions.yml`):
+  Write the contributor list and released versions back into `project.yml` and regenerate the gh-pages index.
+
+All workflows and `.github/scripts/` are synced from grails-plugin-template. To keep a local change, add a
+`<filename>.lock` file next to it.
 
 ## Code Conventions
 

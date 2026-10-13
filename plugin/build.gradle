@@ -6,7 +6,7 @@ plugins {
 }
 
 version = projectVersion
-group = "io.github.gpc"
+group = projectGroup
 
 dependencies {
     profile 'org.apache.grails.profiles:web-plugin'
@@ -32,33 +32,4 @@ dependencies {
 
     api 'commons-beanutils:commons-beanutils:1.11.0'
     api 'commons-codec:commons-codec:1.21.0'
-
-}
-
-extensions.configure(org.apache.grails.gradle.publish.GrailsPublishExtension) {
-    it.artifactId = project.name
-    it.githubSlug = 'gpc/grails-export'
-    it.license.name = 'Apache-2.0'
-    it.title = 'Grails Export Plugin'
-    it.desc = 'This plugin offers export functionality supporting different formats e.g. CSV, Excel, Open Document Spreadsheet, PDF and XML and can be extended to add additional formats.'
-    it.organization {
-        it.name = 'Grails Plugin Collective (GPC)'
-        it.url = 'https://github.com/gpc'
-    }
-    it.developers = [
-            graemerocher:'Graeme Rocher',
-            puneetbehl: 'Puneet Behl',
-            nwwells: 'Nathan Wells',
-            tulu: 'Ruben',
-            arturoojeda: 'Arturo Ojeda López',
-            fabiooshiro: 'Fabio Issamu Oshiro',
-            ddelponte: 'Dean Del Ponte',
-            cristallo: 'Cristiano Limiti',
-            mirweb: 'Mirko Weber',
-            joasgarcia: 'Joás Garcia',
-            frangarcia: 'Fran García',
-            dustindclark: 'Dustin Clark',
-            miq: 'Mihael Koep',
-            sbglasius: 'Søren Berg Glasius'
-    ]
 }
