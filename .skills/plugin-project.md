@@ -1,8 +1,3 @@
----
-name: plugin-project
-description: Scope rules for the plugin/ subproject — plugin source code and unit tests only. Use when adding code or tests to the plugin module, or deciding whether something belongs in the plugin or in an example app.
----
-
 # Plugin Project Best Practices
 
 ## Purpose
@@ -43,21 +38,33 @@ Keeping integration/functional tests out of the plugin project ensures:
 plugin/
 ├── build.gradle                          # Only convention plugins + dependencies
 ├── grails-app/
-│   └── conf/
-│       └── application.yml               # Plugin-specific config defaults
+│   ├── conf/
+│   │   ├── application.yml               # Plugin-specific config defaults
+│   ├── controllers/                      # Interceptors, controller-scoped artifacts
+│   │   └── org/grails/plugins/servertiming/
+│   │       └── ServerTimingInterceptor.groovy
 └── src/
     ├── main/groovy/                      # Core plugin classes
-    │   └── grails/plugins/myplugin/
-    │       └── MyPluginGrailsPlugin.groovy
+    │   └── org/grails/plugins/servertiming/
+    │       ├── ServerTimingAutoConfiguration.groovy
+    │       ├── ServerTimingFilter.groovy
+    │       ├── ServerTimingGrailsPlugin.groovy
+    │       ├── ServerTimingResponseWrapper.groovy
+    │       ├── config/
+    │       │    ├── EnabledCondition.groovy
+    │       │    └── ServerTimingConfig.groovy
+    │       └── core/
+    │           ├── Metric.groovy
+    │           └── TimingMetric.groovy
+    ├── main/resources/  
+    │   ├── META-INF/spring
+    │   │    └── org.springframework.boot.autoconfigure.AutoConfiguration.imports
+    │   └── spring-configuration-metadata.json    
     └── test/groovy/                      # Unit tests ONLY
-        └── grails/plugins/myplugin/
-            └── MyPluginSpec.groovy
+        └── org/grails/plugins/servertiming/
+            ├── MetricSpec.groovy
+            └── TimingMetricSpec.groovy
 ```
-
-This template's own placeholder plugin follows the same shape: a single `PluginTemplateGrailsPlugin` class under
-`plugin/src/main/groovy/grails/plugins/template/`. Real plugins will add whatever additional classes, packages
-(`config/`, `core/`, interceptors, filters, etc.) their functionality needs -- the rule is about what's excluded
-(no integration/functional tests, no example controllers or views), not about a fixed package layout.
 
 ## build.gradle Pattern
 
@@ -72,7 +79,7 @@ plugins {
 }
 
 version = projectVersion
-group = projectGroup
+group = 'io.github.gpc'
 
 dependencies {
 
@@ -99,8 +106,8 @@ Key patterns:
 
 Unit tests in the plugin project test individual classes in isolation:
 
-- Test domain logic, validation, and data structures the plugin provides
-- Test utility/helper classes in isolation
+- Test domain logic, validation, and data structures (e.g., `Metric`, `TimingMetric`)
+- Test utility classes (e.g., `ServerTimingUtils`)
 - Use Spock Framework with `@Unroll` for data-driven tests
 - Do NOT start the Grails application context for unit tests
 - Do NOT make HTTP requests in unit tests
@@ -108,22 +115,24 @@ Unit tests in the plugin project test individual classes in isolation:
 
 ### What belongs in unit tests
 
-- Validation and error cases on plugin domain/value classes
-- Business logic in isolation (no Spring context, no running server)
-- Equals/hashCode contracts, serialization round-trips
-- Output formatting of pure functions/methods
+- RFC 7230 name validation on `Metric`
+- Start/stop lifecycle and duration calculation
+- `toHeaderValue()` output formatting
+- Serialization round-trips
+- Equals/hashCode contracts
+- Validation error cases
 
 ### What does NOT belong in unit tests
 
-- Testing that a feature is observable end-to-end over HTTP (integration test)
-- Testing that filters/interceptors/controllers wire up correctly in a running app (integration test)
+- Testing that the `Server-Timing` header appears in HTTP responses (integration test)
+- Testing that the filter/interceptor wire up correctly in a running app (integration test)
+- Testing timing accuracy across controller actions (integration test)
 - Testing behavior with GSP views, JSON rendering, or static assets (functional test)
 
 ## Plugin Descriptor
 
-The `<MyPlugin>GrailsPlugin` class (e.g. `PluginTemplateGrailsPlugin` in this template) extends `grails.plugins.Plugin`
-and exposes metadata about the plugin to the Grails framework -- `title`, `description`, `documentation`, `license`,
-`organization`, `issueManagement`, `scm`, and the plugin's `grailsVersion` compatibility range.
+The `ServerTimingGrailsPlugin` class extends `grails.plugins.Plugin` and exposes important
+information about the plugin to the Grails framework.
 
 ## Dependency Scoping
 
