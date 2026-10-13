@@ -1,9 +1,0 @@
-// Useful when testing a release version locally and not wanting to setup signing
-pluginManager.withPlugin('signing') {
-    if (System.getenv('DISABLE_BUILD_SIGNING')) {
-        logger.lifecycle('Signing is disabled for this build per configuration.')
-        tasks.withType(Sign).configureEach {
-            enabled = false
-        }
-    }
-}
