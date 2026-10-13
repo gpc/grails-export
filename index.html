@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Export - Grails Plugin</title>
+    <title>Grails Export Plugin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -294,8 +294,8 @@
             View on GitHub
         </a>
         <div class="hero-content">
-            <h1>Export</h1>
-            <p class="subtitle">A Grails plugin that adds export functionality for CSV, Excel, ODS, PDF, RTF, and XML formats</p>
+            <h1>Grails Export Plugin</h1>
+            <p class="subtitle">This plugin offers export functionality supporting different formats e.g. CSV, Excel, Open Document Spreadsheet, PDF and XML and can be extended to add additional formats.</p>
         </div>
     </header>
 
@@ -303,8 +303,10 @@
         <h2 class="section-title">Documentation</h2>
 
         <div class="docs-grid">
+            
             <div class="doc-card">
                 <span class="version-badge latest">Latest Release</span>
+                <span class="version-badge latest">7.1.0</span>
                 <h3>Stable Version</h3>
                 <div class="links">
                     <a href="/grails-export/latest/" class="link">
@@ -321,6 +323,7 @@
                     </a>
                 </div>
             </div>
+            
 
             <div class="doc-card">
                 <span class="version-badge snapshot">Snapshot</span>
@@ -342,17 +345,16 @@
             </div>
         </div>
 
+        
         <h2 class="section-title">Other Versions</h2>
         <div class="doc-card" style="margin-bottom: 3rem;">
             <div class="version-selector">
                 <select id="versionSelect" class="version-select">
                     <option value="" disabled selected>Select a version&hellip;</option>
-                    <option value="7.1.x">7.1.x</option>
                     <option value="7.1.0">7.1.0</option>
-                    <option value="7.0.x">7.0.x</option>
+                    <option value="7.0.0">7.0.0</option>
                     <option value="7.0.0-RC2">7.0.0-RC2</option>
                     <option value="7.0.0-RC1">7.0.0-RC1</option>
-                    <option value="7.0.0">7.0.0</option>
                     <option value="2.0.0">2.0.0</option>
                 </select>
                 <div class="version-nav-links">
@@ -371,6 +373,7 @@
                 </div>
             </div>
         </div>
+        
     </main>
 
     <script>
@@ -378,6 +381,7 @@
             var sel   = document.getElementById('versionSelect');
             var guide = document.getElementById('versionUserGuide');
             var api   = document.getElementById('versionApiRef');
+            if (!sel) return;
             function update() {
                 var v = sel.value;
                 if (!v) return;
