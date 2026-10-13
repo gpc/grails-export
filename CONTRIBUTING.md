@@ -1,14 +1,10 @@
-# Contributing
+# Contributing to Export
 
 Thank you for your interest in contributing! This guide will help you get started.
 
-> This file is synced from [grails-plugin-template](https://github.com/grails-plugins/grails-plugin-template) and
-> kept generic on purpose — it should read correctly in every repo built on the template. To lock it and stop
-> receiving updates, add a `CONTRIBUTING.md.lock` file next to it.
-
 ## Code of Conduct
 
-This project has a Code of Conduct. By participating, you are expected to uphold it. Please report
+This project has a [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold it. Please report
 unacceptable behavior to the project maintainers.
 
 ## Getting Started
@@ -25,10 +21,10 @@ curl -s "https://get.sdkman.io" | bash
 
 ```bash
 # Clone the repository
-git clone <this repository's URL>
-cd <the cloned directory>
+git clone https://github.com/gpc/grails-export.git
+cd export
 
-# Install the required SDK versions (Java, Gradle, Groovy — see .sdkmanrc)
+# Install the required SDK versions (Java 17, Gradle 8.14.4, Groovy 4.0.30)
 sdk env install
 
 # Build the project
@@ -38,12 +34,12 @@ sdk env install
 ### Project Structure
 
 ```
-.
+export/
 ├── plugin/              # The publishable Grails plugin (source + unit tests ONLY)
 ├── examples/app1/       # Example app with integration tests
-├── conventions/         # Gradle convention plugins (shared build configuration)
+├── build-logic/         # Gradle convention plugins (shared build configuration)
 ├── docs/                # Asciidoctor documentation
-└── .agents/skills/      # AI agent skills (.claude is a symlink to .agents)
+└── .skills/             # AI agent best-practice docs
 ```
 
 Key architectural rules:
@@ -51,7 +47,7 @@ Key architectural rules:
 - **Plugin module** contains only plugin source code and unit tests – no integration tests, no example controllers.
 - **Example apps** under `examples/` host all integration and functional tests. They depend on the plugin as a real
   consumer would.
-- **Convention plugins** in `conventions/` deduplicate build configuration. Never use `subprojects {}`,
+- **Convention plugins** in `build-logic/` deduplicate build configuration. Never use `subprojects {}`,
   `allprojects {}`, or `configure()` blocks in the root `build.gradle`.
 
 ## Building and Testing
@@ -61,7 +57,7 @@ Key architectural rules:
 ./gradlew build
 
 # Plugin unit tests only
-./gradlew test
+./gradlew :export:test
 
 # Integration tests (runs the example app)
 ./gradlew :app1:integrationTest
@@ -114,16 +110,18 @@ categorize changes in release notes.
 
 ### Coding Standards
 
-- **Language:** Groovy on Java (see `.sdkmanrc` for exact versions)
-- **Framework:** Grails
+- **Language:** Groovy 4.0 on Java 17
+- **Framework:** Grails 7.0
 - **Testing:** Spock Framework on JUnit Platform
 - Follow existing code conventions in the project
+- Metric names must conform to [RFC 7230 token rules](https://tools.ietf.org/html/rfc7230#section-3.2.6)
+- Use `System.nanoTime()` for timing precision
 
 ### Gradle Conventions
 
 - Always use lazy APIs: `tasks.register()`, `tasks.named()`, `configureEach`, `provider {}`
 - Never use eager task creation (`tasks.create()`, `project.task()`)
-- If two or more subprojects share build logic, extract it into a convention plugin in `conventions/`
+- If two or more subprojects share build logic, extract it into a convention plugin in `build-logic/`
 
 ## Submitting a Pull Request
 
@@ -133,7 +131,7 @@ categorize changes in release notes.
     - Integration tests go in `examples/app1/src/integration-test/`
 3. **Update documentation** if you changed behavior or added features (in `docs/src/docs/`)
 4. **Push your branch** and open a pull request against the release branch
-5. **Fill out the PR template** if the repository provides one
+5. **Fill out the PR template** completely
 
 ### What to Expect
 
@@ -144,16 +142,20 @@ categorize changes in release notes.
 
 ## Reporting Issues
 
-- Check this repository's existing issues before creating a new one
-- Use the bug report or feature request template if the repository provides one under its "New issue" flow
+- Use
+  the [bug report template](https://github.com/gpc/grails-export/issues/new?template=bug_report.yml)
+  for bugs
+- Use
+  the [feature request template](https://github.com/gpc/grails-export/issues/new?template=feature_request.yml)
+  for enhancements
+- Check [existing issues](https://github.com/gpc/grails-export/issues) before creating a new one
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability, **do not open a public issue**. Instead, please report it privately to the
-project maintainers and include details to help reproduce and assess the issue. Responsible disclosure helps us protect
-users while we investigate and prepare a fix.
+If you discover a security vulnerability, **do not open a public issue**. Please see [SECURITY.md](.github/SECURITY.md)
+for responsible disclosure instructions.
 
 ## License
 
 By contributing to this project, you agree that your contributions will be licensed under
-the [Apache License 2.0](LICENSE.txt).
+the [Apache License 2.0](LICENSE).
