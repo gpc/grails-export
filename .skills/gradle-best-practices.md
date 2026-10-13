@@ -1,15 +1,10 @@
----
-name: gradle-best-practices
-description: Gradle conventions for template-based Grails plugin repositories — convention plugins in conventions/, lazy configuration APIs, extension configuration, and build structure rules. Use when writing or modifying any build.gradle file or convention plugin.
----
-
 # Gradle Best Practices
 
 ## Purpose
 
 This skill covers Gradle best practices for this project, including convention plugins, extension configuration,
 lazy APIs, and build structure. Convention plugins remove duplication across subprojects by centralizing shared
-build logic. They live in the `conventions/` composite build and are applied by ID in each subproject's `build.gradle`.
+build logic. They live in the `build-logic/` composite build and are applied by ID in each subproject's `build.gradle`.
 
 ## Core Rules
 
@@ -36,10 +31,10 @@ allprojects {
 }
 ```
 
-Instead, create a convention plugin in `conventions/` and apply it in each subproject that needs it:
+Instead, create a convention plugin in `build-logic/` and apply it in each subproject that needs it:
 
 ```groovy
-// GOOD - conventions/src/main/groovy/config.compile.gradle
+// GOOD - build-logic/src/main/groovy/config.compile.gradle
 plugins {
     id 'groovy'
 }
@@ -53,18 +48,18 @@ plugins {
 }
 ```
 
-The ONLY exception is the `config.publish-root` convention plugin, which exists solely as a workaround for a Nexus
+The ONLY exception is the `root-publish.gradle` convention plugin, which exists solely as a workaround for a Nexus
 publishing bug (https://github.com/gradle-nexus/publish-plugin/issues/310) that requires version/group to be set at the
 root level.
 
 ### Use the composite build pattern
 
-Convention plugins reside in `conventions/`, which is included as a composite build via `settings.gradle`:
+Convention plugins reside in `build-logic/`, which is included as a composite build via `settings.gradle`:
 
 ```groovy
 pluginManagement {
-    includeBuild('./conventions') {
-        it.name = 'conventions'
+    includeBuild('./build-logic') {
+        it.name = 'build-logic'
     }
 }
 ```
@@ -74,47 +69,55 @@ pluginManagement {
 Convention plugin files follow the pattern:
 
 ```
-conventions/src/main/groovy/config.<purpose>.gradle
+build-logic/src/main/groovy/config.<purpose>.gradle
 ```
 
 The plugin ID matches the filename (minus the `.gradle` extension). For example:
 
 - `config.compile.gradle` -> plugin ID `config.compile`
 
-### Declare external plugin dependencies in conventions/build.gradle
+### Declare external plugin dependencies in build-logic/build.gradle
 
 When a convention plugin applies a third-party plugin, that plugin must be declared as an `implementation` dependency in
-`conventions/build.gradle`:
+`build-logic/build.gradle`:
 
 ```groovy
-// conventions/build.gradle
+// build-logic/build.gradle
 plugins {
     id 'groovy-gradle-plugin'
 }
 
 dependencies {
-    implementation platform("org.apache.grails:grails-bom:${grailsVersion}")
+    implementation platform("org.apache.grails:grails-bom:${gradleProperties.grailsVersion}")
     implementation 'org.apache.grails:grails-gradle-plugins'
-    implementation "com.adarshr:gradle-test-logger-plugin:${testLoggerVersion}"
+    implementation "com.adarshr:gradle-test-logger-plugin:${gradleProperties.testLoggerVersion}"
     implementation 'cloud.wondrify:asset-pipeline-gradle'
     implementation 'org.apache.grails.gradle:grails-publish'
 }
 ```
 
-### Versions inside conventions
+### Share properties from root gradle.properties
 
-`conventions/` is its own build, so it does not see the main build's `gradle.properties`. It has a `gradle.properties`
-of its own that pins the versions of the third-party Gradle plugins it builds on (`grailsVersion`,
-`asciidoctorVersion`, `testLoggerVersion`) — this is what lets it be published and consumed on its own later.
-Tool versions used by the convention plugins (`checkstyleVersion`, `codenarcVersion`, `jacocoVersion`) have defaults
-inside the plugins; a consuming repo overrides them with a property of the same name in its root `gradle.properties`.
+The `build-logic/build.gradle` reads the root `gradle.properties` and exposes those values as extra properties so
+convention plugins can reference them (e.g., `grailsVersion`):
 
-The checkstyle/codenarc rule sets are bundled in `conventions/src/main/resources/code-style/` and extracted into each
-project's `build/code-style-config/` by `extractCodeStyleConfig`. `config.docs` derives the plugin/docs project paths
-from the root project name; override them with `pluginDocs { pluginProject = ':x'; docsProject = ':y' }`.
+```groovy
+file('../gradle.properties').withInputStream { is ->
+    extensions.extraProperties.set(
+            'gradleProperties',
+            new Properties().tap { load(is) }
+    )
+}
 
-`conventions/` has TestKit tests (`./gradlew -p conventions test`). Run them with Gradle's embedded Groovy 3, which is
-why the build pins the `groovy-3.0` Spock variant.
+allprojects { project ->
+    gradleProperties.stringPropertyNames().each { key ->
+        project.extensions.extraProperties.set(
+                key,
+                gradleProperties.getProperty(key)
+        )
+    }
+}
+```
 
 ## Avoid Eager Initialization
 
@@ -163,7 +166,7 @@ When configuring project extensions (like publishing metadata or third-party plu
 // GOOD - explicit it in extensions.configure() for type hints
 extensions.configure(GrailsPublishExtension) {
     it.artifactId = project.name
-    it.githubSlug = 'my-org/my-plugin'
+    it.githubSlug = 'gpc/grails-export'
     it.license.name = 'Apache-2.0'
     it.title = 'My Plugin'
     it.developers = [name: 'Developer Name']
@@ -214,15 +217,13 @@ plugins {
 | `app-run.gradle`                 | Debug flags for `bootRun`                                                            |
 | `code-coverage.gradle`           | JaCoCo coverage for project (XML + HTML reports)                                     |
 | `code-coverage-aggregate.gradle` | JaCoCo coverage aggregation across subprojects (XML + HTML reports)                  |
-| `code-style.gradle`              | Checkstyle + CodeNarc code style checking (configs in `conventions/config/`)         |
+| `code-style.gradle`              | Checkstyle + CodeNarc code style checking (configs in `build-logic/config/`)         |
 | `compile.gradle`                 | Java/Groovy compilation settings (UTF-8, incremental, Java release from `.sdkmanrc`) |
 | `docs.gradle`                    | Documentation aggregation (Groovydoc + Asciidoctor)                                  |
-| `example-app.gradle`             | Example app config (app-run, compile, grails-assets, testing, grails-web, GSP)       |
+| `example-app.gradle`             | Example app config (grails-web, GSP, assets)                                         |
 | `grails-assets.gradle`           | Asset pipeline with Bootstrap/jQuery WebJars                                         |
-| `grails-plugin.gradle`           | Applies the Grails plugin Gradle plugin, disables Spring dependency management       |
-| `grails-web-plugin.gradle`       | `grails-plugin` + asset-pipeline packaging, for plugins that ship web assets         |
-| `project-metadata.gradle`        | Parses `project.yml` into extra properties (`projectTitle`, `githubOrg`, etc.)       |
-| `publish.gradle`                 | Per-project Maven publishing metadata (applies `project-metadata` itself)            |
+| `grails-plugin.gradle`           | Grails plugin application                                                            |
+| `publish.gradle`                 | Per-project Maven publishing metadata                                                |
 | `publish-root.gradle`            | Root-level Nexus publishing workaround                                               |
 | `testing.gradle`                 | Test framework config (Spock, JUnit Platform, test-logger)                           |
 
