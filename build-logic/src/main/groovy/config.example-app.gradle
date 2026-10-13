@@ -1,8 +1,0 @@
-plugins {
-    id 'config.app-run'
-    id 'config.compile'
-    id 'config.grails-assets'
-    id 'config.testing'
-    id 'org.apache.grails.gradle.grails-web'
-    id 'org.apache.grails.gradle.grails-gsp'
-}
