@@ -1,0 +1,38 @@
+---
+project:
+  name: "grails-export"
+  title: "Grails Export Plugin"
+  description: "This plugin offers export functionality supporting different formats e.g. CSV, Excel, Open Document Spreadsheet, PDF and XML and can be extended to add additional formats."
+  org: "Grails Plugin Collective (GPC)"
+github:
+  org: "gpc"
+  project: "grails-export"
+license:
+  name: "Apache-2.0"
+contributors:
+  graemerocher: "Graeme Rocher"
+  puneetbehl: "Puneet Behl"
+  nwwells: "Nathan Wells"
+  tulu: "Ruben"
+  arturoojeda: "Arturo Ojeda López"
+  fabiooshiro: "Fabio Issamu Oshiro"
+  ddelponte: "Dean Del Ponte"
+  cristallo: "Cristiano Limiti"
+  mirweb: "Mirko Weber"
+  joasgarcia: "Joás Garcia"
+  frangarcia: "Fran García"
+  dustindclark: "Dustin Clark"
+  miq: "Mihael Koep"
+  sbglasius: "Søren Berg Glasius"
+versions:
+  current: "7.1.0"
+  previous:
+  - "7.1.0"
+  - "7.0.0"
+  - "7.0.0-RC2"
+  - "7.0.0-RC1"
+  - "2.0.0"
+  ignore:
+  - "7.1.x"
+  - "7.0.x"
+  - "snapshot"
