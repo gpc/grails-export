@@ -18,6 +18,14 @@ This was previously forked from [Nathan Wells]
 
 Add the following dependency to the `build.gradle` file:
 
+### Grails 8.x
+
+```
+dependencies {
+    implementation("io.github.gpc:grails-export:8.0.0")
+}
+```
+
 ### Grails 7.x
 
 ```

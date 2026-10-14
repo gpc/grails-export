@@ -1,7 +1,7 @@
 [[installation]]
 === Installation
 
-To use the plugin with Grails 7.x:
+To use the plugin with Grails 8.x:
 
 [source, groovy, subs="attributes,verbatim"]
 ----
@@ -11,6 +11,8 @@ dependencies {
 ----
 
 You can find the dependency declaration for the latest version on the https://grails.org/plugins.html#plugin/io.github.gpc:grails-export[plugin portal page].
+
+For usage with Grails 7.x you have to use plugin version 7.x, e.g. `io.github.gpc:grails-export:7.0.0`.
 
 For usage with Grails 3.x to 6.x you have to use plugin version 2.0.0 available at the old coordinates:
 
