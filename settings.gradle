@@ -4,7 +4,6 @@ pluginManagement {
     repositories {
         // >>> grails-plugin-conventions (managed by grails-plugin-template files-sync, do not edit)
         mavenCentral()
-        maven { url = 'https://central.sonatype.com/repository/maven-snapshots/'; mavenContent { snapshotsOnly() } }
         // <<< grails-plugin-conventions
         if (System.getenv('INCLUDE_MAVEN_LOCAL')) {
             mavenLocal()
@@ -16,7 +15,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith('config.')) {
-                useModule('org.grails.plugins.gradle:grails-plugin-conventions:1.0.0-SNAPSHOT')
+                useModule('org.grails.plugins.gradle:grails-plugin-conventions:1.0.0-RC1')
             }
         }
     }
