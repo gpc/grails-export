@@ -5,9 +5,9 @@
 This is a **Grails Plugin** that adds export functionality supporting different formats e.g. CSV, Excel (xls, xlsx),
 Open Document Spreadsheet, PDF and XML and can be extended to add additional formats.
 
-- **Language:** Groovy 4.0.30 on Java 17
-- **Framework:** Grails 7.x
-- **Build System:** Gradle 8.14.4 (with wrapper)
+- **Language:** Groovy 5.1.3 on Java 21
+- **Framework:** Grails 8.x
+- **Build System:** Gradle 9.8.1 (with wrapper)
 - **Current Version:** see `projectVersion` in `gradle.properties`
 - **License:** Apache 2.0
 
@@ -97,9 +97,9 @@ groovy .github/scripts/verify-repository.groovy
 
 Use SDKMAN to install the correct tool versions (see `.sdkmanrc`):
 
-- Java: `17.0.18-librca`
-- Gradle: `8.14.4`
-- Groovy: `4.0.30`
+- Java: `21.0.12-librca`
+- Gradle: `9.8.1`
+- Groovy: `5.1.3`
 
 Run `sdk env install` to set up the environment.
 

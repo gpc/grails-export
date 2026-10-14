@@ -1,3 +1,11 @@
+buildscript {
+    dependencies {
+        // The published grails-plugin-conventions are built against Grails 7; align the Grails Gradle plugins
+        // (grails-gradle-plugins, asset-pipeline-gradle, grails-publish) with this project's Grails version
+        classpath platform("org.apache.grails:grails-bom:$grailsVersion")
+    }
+}
+
 plugins {
     id 'idea'
     id 'config.docs'

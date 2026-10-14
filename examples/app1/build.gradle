@@ -31,7 +31,6 @@ dependencies {
     implementation "org.apache.grails:grails-scaffolding"
     implementation "org.apache.grails:grails-gsp"
     integrationTestImplementation testFixtures("org.apache.grails:grails-geb")
-    runtimeOnly "org.fusesource.jansi:jansi"
     runtimeOnly "cloud.wondrify:asset-pipeline-grails"
     testAndDevelopmentOnly "org.webjars.npm:bootstrap"
     testAndDevelopmentOnly "org.webjars.npm:bootstrap-icons"
