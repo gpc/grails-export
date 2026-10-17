@@ -83,8 +83,11 @@ The plugin ID matches the filename (minus the `.gradle` extension). For example:
 
 ### Declare external plugin dependencies in conventions/build.gradle
 
-When a convention plugin applies a third-party plugin, that plugin must be declared as an `implementation` dependency in
-`conventions/build.gradle`:
+When a convention plugin applies a third-party plugin, that plugin must be declared as a dependency in
+`conventions/build.gradle`. Plugins whose version does not depend on the Grails line are `implementation`
+dependencies. The Grails, asset-pipeline and grails-publish Gradle plugins follow the Grails line (7.x for Grails 7 on
+Gradle 8, 8.x for Grails 8 on Gradle 9), so they are only `compileOnly`: a runtime dependency would land in the
+published POM and force the conventions' `grailsVersion` on every consumer.
 
 ```groovy
 // conventions/build.gradle
@@ -93,19 +96,42 @@ plugins {
 }
 
 dependencies {
-    implementation platform("org.apache.grails:grails-bom:${grailsVersion}")
-    implementation 'org.apache.grails:grails-gradle-plugins'
     implementation "com.adarshr:gradle-test-logger-plugin:${testLoggerVersion}"
-    implementation 'cloud.wondrify:asset-pipeline-gradle'
-    implementation 'org.apache.grails.gradle:grails-publish'
+
+    compileOnly platform("org.apache.grails:grails-bom:${grailsVersion}")
+    compileOnly 'org.apache.grails:grails-gradle-plugins'
+    compileOnly 'cloud.wondrify:asset-pipeline-gradle'
+    compileOnly 'org.apache.grails.gradle:grails-publish'
 }
 ```
+
+The consuming build provides them at its own `grailsVersion`, on the settings classpath that every project inherits.
+This block in `settings.gradle` sits between `grails-plugin-conventions` marker comments and is kept up to date by
+files-sync:
+
+```groovy
+buildscript {
+    repositories {
+        maven { url = 'https://repo.grails.org/grails/restricted' }
+    }
+    dependencies {
+        classpath platform("org.apache.grails:grails-bom:${grailsVersion}")
+        classpath 'org.apache.grails:grails-gradle-plugins'
+        classpath 'cloud.wondrify:asset-pipeline-gradle'
+        classpath 'org.apache.grails.gradle:grails-publish'
+    }
+}
+```
+
+`GrailsLineSpec` in `conventions/src/test` builds a consumer on each supported Grails line (the Grails 8 one runs only
+on Java 21+).
 
 ### Versions inside conventions
 
 `conventions/` is its own build, so it does not see the main build's `gradle.properties`. It has a `gradle.properties`
 of its own that pins the versions of the third-party Gradle plugins it builds on (`grailsVersion`,
 `asciidoctorVersion`, `testLoggerVersion`) — this is what lets it be published and consumed on its own later.
+`grailsVersion` there is only compiled against; at runtime the consumer's `grailsVersion` decides (see above).
 Tool versions used by the convention plugins (`checkstyleVersion`, `codenarcVersion`, `jacocoVersion`) have defaults
 inside the plugins; a consuming repo overrides them with a property of the same name in its root `gradle.properties`.
 
