@@ -4,6 +4,6 @@
 |===
 | Parameters	| Default Value			| Allowed Values																	| Description
 | encoding		| JVM default encoding	| http://java.sun.com/javase/6/docs/api/java/nio/charset/Charset.html e.g. "UTF-8")		| encoding
-| xml.root		| object class name		| a String																					| root element name
+| xml.root		| object class name, plural (`items` when there are no records)		| a String																					| root element name
 | depth			| 	1					|	1 means only direct domain attributes 2 or more collection attributes as well	| depth (as integer) for building tree affects how collections and relationships are exported
 |===
