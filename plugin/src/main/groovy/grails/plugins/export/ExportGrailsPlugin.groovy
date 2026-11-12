@@ -30,12 +30,11 @@ and can be extended to add additional formats.
             "exporterFactory"(grails.plugins.export.exporter.DefaultExporterFactory)
 
             try {
-                grailsApplication.config.exporters.each { key, value ->
+                // getProperty, not dot notation, which Grails warns about at startup
+                grailsApplication.config.getProperty('exporters', Map, [:]).each { key, value ->
                     try {
                         //Override default renderer configuration
-                        if (grailsApplication.config?.export."${key}") {
-                            value = grailsApplication.config.export."${key}"
-                        }
+                        value = grailsApplication.config.getProperty("export.${key}", String, value as String)
 
                         Class clazz = Class.forName(value, true, new GroovyClassLoader())
 
