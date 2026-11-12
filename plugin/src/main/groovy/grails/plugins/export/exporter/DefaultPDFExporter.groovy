@@ -252,7 +252,7 @@ class DefaultPDFExporter extends AbstractExporter {
 		
 		// Font encoding (to overwrite global encoding)
 		if(getParameters().containsKey(type + ".encoding")){
-			family = getParameters().get(type + ".encoding")
+			encoding = getParameters().get(type + ".encoding")
 		}
 		
 		return FontFactory.getFont(family, encoding, fontSize, style) 

@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
+import com.lowagie.text.pdf.PdfDictionary
 import com.lowagie.text.pdf.PdfName
 import com.lowagie.text.pdf.PdfReader
 import com.lowagie.text.pdf.parser.PdfTextExtractor
@@ -136,6 +137,28 @@ class ExportersSpec extends Specification {
         text.contains('Author')
         text.contains('Beta Title')
         reader.getPageN(1).getAsDict(PdfName.RESOURCES).getAsDict(PdfName.XOBJECT)?.size() > 0
+    }
+
+    def "text.encoding sets the encoding of the records' font"() {
+        given: 'a name that Cp1252, the default encoding, cannot write'
+        DefaultPDFExporter exporter = new DefaultPDFExporter(exportFields: ['author'], parameters: ['text.encoding': 'Cp1250'])
+        ByteArrayOutputStream out = new ByteArrayOutputStream()
+
+        when:
+        exporter.export(out, [new Book(author: 'Dvořák')])
+        PdfReader reader = new PdfReader(out.toByteArray())
+        PdfDictionary fonts = reader.getPageN(1).getAsDict(PdfName.RESOURCES).getAsDict(PdfName.FONT)
+        Map<String, String> encodings = fonts.keys.collectEntries { PdfName key ->
+            PdfDictionary font = fonts.getAsDict(key)
+            [(font.get(PdfName.BASEFONT).toString()): font.get(PdfName.ENCODING).toString()]
+        }
+
+        then: 'the header font keeps Cp1252 (WinAnsiEncoding), and the records font is Cp1250, which has a glyph for ř'
+        encodings['/Helvetica-Bold'] == '/WinAnsiEncoding'
+        fonts.keys.collect { fonts.getAsDict(it) }
+                .find { it.get(PdfName.BASEFONT).toString() == '/Helvetica' }
+                .getAsDict(PdfName.ENCODING).getAsArray(PdfName.DIFFERENCES).toString().contains('/rcaron')
+        warnings() == []
     }
 
     def "a font setting that cannot be applied is logged and skipped"() {
