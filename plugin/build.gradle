@@ -22,8 +22,8 @@ dependencies {
     // export plugin specific dependencies
     api 'com.opencsv:opencsv:5.12.0'
 
-    api 'com.github.librepdf:openpdf:1.4.2'
-    api 'com.github.librepdf:openrtf:1.2.1'
+    api 'com.github.librepdf:openpdf:3.0.5'
+    api 'com.github.librepdf:openrtf:3.0.0'
     runtimeOnly 'xerces:xercesImpl:2.12.2'
 
     api 'org.odftoolkit:odfdom-java:0.13.0'

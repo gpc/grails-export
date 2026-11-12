@@ -1,8 +1,8 @@
 package grails.plugins.export.exporter
 
-import com.lowagie.text.pdf.PdfName
-import com.lowagie.text.pdf.PdfReader
-import com.lowagie.text.pdf.parser.PdfTextExtractor
+import org.openpdf.text.pdf.PdfName
+import org.openpdf.text.pdf.PdfReader
+import org.openpdf.text.pdf.parser.PdfTextExtractor
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument
 import spock.lang.Specification

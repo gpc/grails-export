@@ -8,9 +8,9 @@ Supports mainly the same parameters as PDF
 
 |===
 | Parameters		| Default Value			| Allowed Values													| Description
-| rtf.encoding		|"Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see http://itextdocs.lowagie.com/tutorial/fonts/index.php for further information about encodings	| Font encoding
-| title.encoding	| "Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see http://itextdocs.lowagie.com/tutorial/fonts/index.php for further information about encodings	| Title font encoding
-| header.encoding	| "Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see http://itextdocs.lowagie.com/tutorial/fonts/index.php for further information about encodings	| Header font encoding
-| text.encoding		| "Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see http://itextdocs.lowagie.com/tutorial/fonts/index.php for further information about encodings	| Text font encoding 
+| rtf.encoding		|"Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html	| Font encoding
+| title.encoding	| "Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html	| Title font encoding
+| header.encoding	| "Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html	| Header font encoding
+| text.encoding		| "Cp1252" (=latin 1)	| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html	| Text font encoding 
 | header.enabled	| true	| true/false	| enable/disable header output
 |===
