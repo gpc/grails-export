@@ -2,9 +2,11 @@ package grails.plugins.export.builder
 
 
 import org.apache.poi.common.usermodel.HyperlinkType
+import org.apache.poi.hpsf.PropertySet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.ss.util.WorkbookUtil
+import org.apache.poi.util.CodePageUtil
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -105,6 +107,14 @@ class ExcelBuilder extends BuilderSupport {
 					log.debug("Creating workbook")
 					// we support new XLSX file format but default to the old excel 97 file format if not requested otherwise
 					workbook = attributes?.fileFormat == 'xlsx' ? new XSSFWorkbook() : new HSSFWorkbook()
+					if (workbook instanceof HSSFWorkbook) {
+						// A new xls workbook has no summary information, and POI warns about each missing
+						// property set, and then about each one without a codepage, when it is written
+						workbook.createInformationProperties()
+						[workbook.summaryInformation, workbook.documentSummaryInformation].each { PropertySet properties ->
+							properties.firstSection.setCodepage(CodePageUtil.CP_UNICODE)
+						}
+					}
 					defaultHyperlinkStyle = createDefaultHyperlinkStyle(workbook)
 					dateCellStyle = createDateCellStyle(workbook, attributes.dateFormat ?: 'm/d/yy h:mm')
 				} catch (Exception e) {

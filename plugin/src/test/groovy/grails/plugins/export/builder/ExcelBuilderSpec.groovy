@@ -12,14 +12,18 @@ class ExcelBuilderSpec extends Specification {
 
     ListAppender<ILoggingEvent> appender = new ListAppender<>()
     Logger builderLog = LoggerFactory.getLogger(ExcelBuilder) as Logger
+    // POI logs through the Log4j API, which Spring Boot routes to SLF4J (log4j-to-slf4j)
+    Logger poiLog = LoggerFactory.getLogger('org.apache.poi') as Logger
 
     def setup() {
         appender.start()
         builderLog.addAppender(appender)
+        poiLog.addAppender(appender)
     }
 
     def cleanup() {
         builderLog.detachAppender(appender)
+        poiLog.detachAppender(appender)
     }
 
     def "a sheet without widths or widthAutoSize is created without an error"() {
@@ -42,6 +46,30 @@ class ExcelBuilderSpec extends Specification {
         !builder.autoSizeColumns
         WorkbookFactory.create(new ByteArrayInputStream(out.toByteArray())).getSheet('Sheet1')
                 .getRow(0).getCell(0).stringCellValue == 'Hello'
+    }
+
+    def "a workbook is written without warnings, in either file format"() {
+        given:
+        ByteArrayOutputStream out = new ByteArrayOutputStream()
+        ExcelBuilder builder = new ExcelBuilder()
+
+        when:
+        builder {
+            workbook(fileFormat: fileFormat) {
+                sheet(name: 'Sheet1') {
+                    cell(row: 0, column: 0, value: 'Hello')
+                }
+            }
+        }
+        builder.write(out)
+
+        then:
+        appender.list.findAll { it.level.isGreaterOrEqual(Level.WARN) }*.formattedMessage == []
+        WorkbookFactory.create(new ByteArrayInputStream(out.toByteArray())).getSheet('Sheet1')
+                .getRow(0).getCell(0).stringCellValue == 'Hello'
+
+        where:
+        fileFormat << ['xls', 'xlsx']
     }
 
     def "widthAutoSize turns column auto-sizing on or off"() {
