@@ -65,4 +65,23 @@ class DefaultXMLExporterSpec extends Specification {
         root.book.@id.text() == '3'
         root.book.title.text() == 'Alpha'
     }
+
+    def "no records give an empty root element, named by xml.root when it is set"() {
+        given:
+        DefaultXMLExporter exporter = new DefaultXMLExporter(exportFields: ['title'], parameters: parameters)
+        ByteArrayOutputStream out = new ByteArrayOutputStream()
+
+        when:
+        exporter.export(out, [])
+        def root = new XmlSlurper().parseText(out.toString('UTF-8'))
+
+        then:
+        root.name() == rootName
+        root.children().size() == 0
+
+        where:
+        parameters               | rootName
+        [:]                      | 'items'
+        ['xml.root': 'pilotLogs'] | 'pilotLogs'
+    }
 }

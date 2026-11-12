@@ -3,6 +3,12 @@
 
 Find project history on https://github.com/gpc/grails-export/releases
 
+* Version 8.0.0
+** Grails 8 (Groovy 5, Java 21)
+** Excel export no longer fails when `column.width.autoSize` is not set
+** XML export no longer fails for records without an `xmlNodeName` or `id` property
+** PDF and RTF: `title.encoding`, `header.encoding` and `text.encoding` now set the font's encoding (they set its family)
+** Logging goes through SLF4J
 * April 14, 2026 (version 7.0.0)
 ** Major upgrade to Grails 7.0.x
 ** Use Apache POI instead of jexcelapi for MS Excel file formats
