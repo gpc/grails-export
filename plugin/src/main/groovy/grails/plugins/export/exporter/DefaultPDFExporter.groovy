@@ -2,7 +2,7 @@ package grails.plugins.export.exporter
 
 import java.awt.Color
 
-import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 
 import com.lowagie.text.Document
 import com.lowagie.text.Element
@@ -23,6 +23,7 @@ import com.lowagie.text.pdf.PdfWriter
  * @author Andreas Schmitt
  * 
  */
+@Slf4j
 class DefaultPDFExporter extends AbstractExporter {
 	
 	private static Map fontStyles = [bold: Font.BOLD, italic: Font.ITALIC, normal: Font.NORMAL, bolditalic: Font.BOLDITALIC]
@@ -82,7 +83,7 @@ class DefaultPDFExporter extends AbstractExporter {
 					
 					int i = 0
 					columnWidths?.each { width ->
-						tableColumnWidths[i] = new Float("${width}")
+						tableColumnWidths[i] = Float.valueOf(width.toString())
 						i += 1
 					}
 					
@@ -148,7 +149,7 @@ class DefaultPDFExporter extends AbstractExporter {
 					}
 				}
 				catch(Exception e){
-					e.printStackTrace()
+					log.error("Could not add the extra header rows (header: ${getParameters().get('header')})", e)
 				}
 			}
 			
@@ -222,10 +223,10 @@ class DefaultPDFExporter extends AbstractExporter {
 		// Font size
 		if(getParameters().containsKey(type + ".font.size")){
 			try {
-				fontSize = new Integer(getParameters().get(type + ".font.size"))	
+				fontSize = Integer.valueOf(getParameters().get(type + ".font.size").toString())	
 			}
 			catch(Exception e){
-				println e
+				log.warn("Ignoring ${type}.font.size: ${getParameters().get(type + ".font.size")}", e)
 			}
 		}
 		
@@ -245,13 +246,13 @@ class DefaultPDFExporter extends AbstractExporter {
 				style = fontStyles[getParameters().get(type + ".font.style")]
 			}
 			catch(Exception e){
-				println e
+				log.warn("Ignoring ${type}.font.style: ${getParameters().get(type + ".font.style")}", e)
 			}
 		}
 		
 		// Font encoding (to overwrite global encoding)
 		if(getParameters().containsKey(type + ".encoding")){
-			family = getParameters().get(type + ".encoding")
+			encoding = getParameters().get(type + ".encoding")
 		}
 		
 		return FontFactory.getFont(family, encoding, fontSize, style) 

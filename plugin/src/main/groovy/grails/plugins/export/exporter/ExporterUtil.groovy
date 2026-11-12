@@ -1,13 +1,13 @@
 package grails.plugins.export.exporter
 
-import org.apache.commons.logging.LogFactory
-import org.apache.commons.logging.Log
+import groovy.util.logging.Slf4j
 import org.apache.commons.beanutils.PropertyUtils
 
 /**
  * @author Andreas Schmitt
  * 
  */
+@Slf4j
 class ExporterUtil {
 	
 	private static Map excludes = [hasMany: true, belongsTo: true, searchable: true, __timeStamp: true, 
@@ -17,8 +17,6 @@ class ExporterUtil {
 					errors: true, instanceControllersDomainBindingApi: true, 
 					instanceConvertersApi: true, instanceDatabindingApi: true,
 					'log': true]
-	
-	private static Log log = LogFactory.getLog(ExporterUtil)
 	
 	private ExporterUtil(){
 		throw new AssertionError()
