@@ -22,7 +22,7 @@ Add the following dependency to the `build.gradle` file:
 
 ```
 dependencies {
-    implementation("io.github.gpc:grails-export:8.0.0")
+    implementation("io.github.gpc:grails-export:8.1.0")
 }
 ```
 
