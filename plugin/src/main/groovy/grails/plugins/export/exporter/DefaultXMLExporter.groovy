@@ -20,7 +20,7 @@ class DefaultXMLExporter extends AbstractExporter {
 				// Depth for building XML tree
 				if(getParameters().containsKey("depth")){
 					try {
-						depth = new Integer(getParameters().get("depth") + "")
+						depth = Integer.valueOf(getParameters().get("depth") + "")
 					}
 					catch (Exception e){
 						depth = 1

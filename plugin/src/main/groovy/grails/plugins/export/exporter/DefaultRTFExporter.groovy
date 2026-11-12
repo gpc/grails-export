@@ -14,6 +14,7 @@ import com.lowagie.text.HeaderFooter
 import com.lowagie.text.Phrase
 import com.lowagie.text.Element
 import com.lowagie.text.Rectangle
+import groovy.util.logging.Slf4j
 import java.awt.Color
 
 
@@ -21,6 +22,7 @@ import java.awt.Color
  * @author Andreas Schmitt
  * 
  */
+@Slf4j
 public class DefaultRTFExporter extends AbstractExporter {
 	
 	private static Map fontStyles = [bold: Font.BOLD, italic: Font.ITALIC, normal: Font.NORMAL, bolditalic: Font.BOLDITALIC]
@@ -71,7 +73,7 @@ public class DefaultRTFExporter extends AbstractExporter {
 					
 					int i = 0
 					columnWidths?.each { width ->
-						tableColumnWidths[i] = new Float("${width}")
+						tableColumnWidths[i] = Float.valueOf(width.toString())
 						i += 1
 					}
 					
@@ -128,10 +130,10 @@ public class DefaultRTFExporter extends AbstractExporter {
 		// Font size
 		if(getParameters().containsKey(type + ".font.size")){
 			try {
-				fontSize = new Integer(getParameters().get(type + ".font.size"))	
+				fontSize = Integer.valueOf(getParameters().get(type + ".font.size").toString())	
 			}
 			catch(Exception e){
-				println e
+				log.warn("Ignoring ${type}.font.size: ${getParameters().get(type + ".font.size")}", e)
 			}
 		}
 		
@@ -151,13 +153,13 @@ public class DefaultRTFExporter extends AbstractExporter {
 				style = fontStyles[getParameters().get(type + ".font.style")]
 			}
 			catch(Exception e){
-				println e
+				log.warn("Ignoring ${type}.font.style: ${getParameters().get(type + ".font.style")}", e)
 			}
 		}
 		
 		// Font encoding (to overwrite global encoding)
 		if(getParameters().containsKey(type + ".encoding")){
-			family = getParameters().get(type + ".encoding")
+			encoding = getParameters().get(type + ".encoding")
 		}
 		
 		return FontFactory.getFont(family, encoding, fontSize, style) 
