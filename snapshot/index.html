@@ -532,7 +532,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>Export Plugin - Reference Documentation</h1>
 <div class="details">
 <span id="author" class="author">Grails Plugin Collective</span><br>
-<span id="revnumber">version 8.1.0-SNAPSHOT</span>
+<span id="revnumber">version 8.0.0-SNAPSHOT</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -589,7 +589,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="sect2">
 <h3 id="currentVersion">Current version</h3>
 <div class="paragraph">
-<p>Current version is <strong>8.1.0-SNAPSHOT</strong> (for Grails 2.x the latest version is <strong>1.6</strong>)</p>
+<p>Current version is <strong>8.0.0-SNAPSHOT</strong> (for Grails 2.x the latest version is <strong>1.6</strong>)</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -626,6 +626,28 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>Version 8.0.0</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Grails 8 (Groovy 5, Java 21)</p>
+</li>
+<li>
+<p>Excel export no longer fails when <code>column.width.autoSize</code> is not set</p>
+</li>
+<li>
+<p>XML export no longer fails for records without an <code>xmlNodeName</code> or <code>id</code> property</p>
+</li>
+<li>
+<p>PDF and RTF: <code>title.encoding</code>, <code>header.encoding</code> and <code>text.encoding</code> now set the font&#8217;s encoding (they set its family)</p>
+</li>
+<li>
+<p>Logging goes through SLF4J</p>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>April 14, 2026 (version 7.0.0)</p>
 <div class="ulist">
@@ -1032,7 +1054,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy">dependencies {
-    implementation <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.gpc:grails-export:8.1.0-SNAPSHOT</span><span class="delimiter">&quot;</span></span>
+    implementation <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.gpc:grails-export:8.0.0-SNAPSHOT</span><span class="delimiter">&quot;</span></span>
 }</code></pre>
 </div>
 </div>
@@ -1612,8 +1634,8 @@ Map parameters = [<span class="string"><span class="delimiter">&quot;</span><spa
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 8.1.0-SNAPSHOT<br>
-Last updated 2026-11-12 20:39:27 UTC
+Version 8.0.0-SNAPSHOT<br>
+Last updated 2026-11-12 20:47:58 UTC
 </div>
 </div>
 </body>
