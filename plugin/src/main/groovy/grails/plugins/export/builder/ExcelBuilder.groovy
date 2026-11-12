@@ -121,7 +121,10 @@ class ExcelBuilder extends BuilderSupport {
 							sheet.setColumnWidth(i, (width < 1.0 ? width * 100 : width) as int)
 						}
 					} else {
-                        autoSizeColumns = attributes?.widthAutoSize as boolean
+                        // Groovy truth, not `as boolean`: on Groovy 5 `null as boolean` throws
+                        // IllegalArgumentException instead of giving false, and a sheet without
+                        // widthAutoSize (the column.width.autoSize export parameter) passes null.
+                        autoSizeColumns = attributes?.widthAutoSize ? true : false
                     }
     			} catch(Exception e) {
     				log.error("Error creating sheet", e)
