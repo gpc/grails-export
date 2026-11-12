@@ -1,12 +1,9 @@
 package grails.plugins.export
 
-import groovy.util.logging.Commons
-
 import org.slf4j.LoggerFactory
 
 import grails.plugins.Plugin
 
-@Commons
 class ExportGrailsPlugin extends Plugin {
     def grailsVersion = "7.0.0 > *"
     def dependsOn = [:]
