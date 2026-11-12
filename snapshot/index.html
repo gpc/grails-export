@@ -532,7 +532,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>Export Plugin - Reference Documentation</h1>
 <div class="details">
 <span id="author" class="author">Grails Plugin Collective</span><br>
-<span id="revnumber">version 9.0.0-SNAPSHOT</span>
+<span id="revnumber">version 8.0.0-SNAPSHOT</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -589,7 +589,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="sect2">
 <h3 id="currentVersion">Current version</h3>
 <div class="paragraph">
-<p>Current version is <strong>9.0.0-SNAPSHOT</strong> (for Grails 2.x the latest version is <strong>1.6</strong>)</p>
+<p>Current version is <strong>8.0.0-SNAPSHOT</strong> (for Grails 2.x the latest version is <strong>1.6</strong>)</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1054,7 +1054,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy">dependencies {
-    implementation <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.gpc:grails-export:9.0.0-SNAPSHOT</span><span class="delimiter">&quot;</span></span>
+    implementation <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.gpc:grails-export:8.0.0-SNAPSHOT</span><span class="delimiter">&quot;</span></span>
 }</code></pre>
 </div>
 </div>
@@ -1062,7 +1062,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <p>You can find the dependency declaration for the latest version on the <a href="https://grails.org/plugins.html#plugin/io.github.gpc:grails-export">plugin portal page</a>.</p>
 </div>
 <div class="paragraph">
-<p>For usage with Grails 7.x you have to use plugin version 7.x, e.g. <code>io.github.gpc:grails-export:7.0.0</code>.</p>
+<p>For usage with Grails 7.x you have to use plugin version 7.x, e.g. <code>io.github.gpc:grails-export:7.1.0</code>.</p>
 </div>
 <div class="paragraph">
 <p>For usage with Grails 3.x to 6.x you have to use plugin version 2.0.0 available at the old coordinates:</p>
@@ -1296,7 +1296,7 @@ default.ods=ODS</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">pdf.encoding</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1252" (=latin 1)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see <a href="http://itextdocs.lowagie.com/tutorial/fonts/index.php" class="bare">http://itextdocs.lowagie.com/tutorial/fonts/index.php</a> for further information about encodings</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies font encoding</p></td>
 </tr>
 <tr>
@@ -1337,26 +1337,26 @@ default.ods=ODS</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">font.family</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.openpdf.text.FontFactory.HELVETICA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.lowagie.text.FontFactory.HELVETICA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html" class="bare">http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Global font family</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">title.font.family</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.openpdf.text.FontFactory.HELVETICA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.lowagie.text.FontFactory.HELVETICA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html" class="bare">http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Title font family</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">header.font.family</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.openpdf.text.FontFactory.HELVETICA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.lowagie.text.FontFactory.HELVETICA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html" class="bare">http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Header font family</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">text.font.family</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.openpdf.text.FontFactory.HELVETICA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.lowagie.text.FontFactory.HELVETICA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">constants defined in <a href="http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html" class="bare">http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Text font family</p></td>
 </tr>
 <tr>
@@ -1562,25 +1562,25 @@ Map parameters = [<span class="string"><span class="delimiter">&quot;</span><spa
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">rtf.encoding</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1252" (=latin 1)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see <a href="http://itextdocs.lowagie.com/tutorial/fonts/index.php" class="bare">http://itextdocs.lowagie.com/tutorial/fonts/index.php</a> for further information about encodings</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Font encoding</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">title.encoding</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1252" (=latin 1)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see <a href="http://itextdocs.lowagie.com/tutorial/fonts/index.php" class="bare">http://itextdocs.lowagie.com/tutorial/fonts/index.php</a> for further information about encodings</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Title font encoding</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">header.encoding</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1252" (=latin 1)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see <a href="http://itextdocs.lowagie.com/tutorial/fonts/index.php" class="bare">http://itextdocs.lowagie.com/tutorial/fonts/index.php</a> for further information about encodings</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Header font encoding</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">text.encoding</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1252" (=latin 1)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in <a href="https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html" class="bare">https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see <a href="http://itextdocs.lowagie.com/tutorial/fonts/index.php" class="bare">http://itextdocs.lowagie.com/tutorial/fonts/index.php</a> for further information about encodings</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Text font encoding</p></td>
 </tr>
 <tr>
@@ -1634,8 +1634,8 @@ Map parameters = [<span class="string"><span class="delimiter">&quot;</span><spa
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 9.0.0-SNAPSHOT<br>
-Last updated 2026-11-12 21:16:41 UTC
+Version 8.0.0-SNAPSHOT<br>
+Last updated 2026-11-12 21:16:52 UTC
 </div>
 </div>
 </body>
