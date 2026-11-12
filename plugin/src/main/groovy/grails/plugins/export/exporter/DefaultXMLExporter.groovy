@@ -55,6 +55,15 @@ class DefaultXMLExporter extends AbstractExporter {
 		return value?.toLowerCase()
 	}
 	
+	// xmlNodeName (the record's element name) and id (its id attribute) are optional: a record without the
+	// property gets the default rather than a MissingPropertyException, which failed the whole export.
+	private static Object optionalProperty(Object object, String name) {
+		if (object instanceof Map) {
+			return object[name]
+		}
+		return object?.hasProperty(name) ? object[name] : null
+	}
+
 	private void build(String node, builder, Collection data, List fields, int depth){
 		if(depth >= 0 && data.size() > 0){
 			// Check to use id as node attribute
@@ -70,7 +79,7 @@ class DefaultXMLExporter extends AbstractExporter {
 				//Iterate through data
 				data.each { object ->
 					//Object element
-					"${object?.xmlNodeName ?: properCase(object?.getClass()?.simpleName)}"(attributeMap != null ? attributeMap : [id: object?.id]){
+					"${optionalProperty(object, 'xmlNodeName') ?: properCase(object?.getClass()?.simpleName)}"(attributeMap != null ? attributeMap : [id: optionalProperty(object, 'id')]){
 						//Object attributes
 						fields.each { field ->
 							String elementName = getLabel(field)
