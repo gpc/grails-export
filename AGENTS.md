@@ -7,7 +7,7 @@ Open Document Spreadsheet, PDF and XML and can be extended to add additional for
 
 - **Language:** Groovy 5.1.3 on Java 21
 - **Framework:** Grails 8.x
-- **Build System:** Gradle 9.8.1 (with wrapper)
+- **Build System:** Gradle 9.9.1 (with wrapper)
 - **Current Version:** see `projectVersion` in `gradle.properties`
 - **License:** Apache 2.0
 
@@ -98,7 +98,7 @@ groovy .github/scripts/verify-repository.groovy
 Use SDKMAN to install the correct tool versions (see `.sdkmanrc`):
 
 - Java: `21.0.12-librca`
-- Gradle: `9.8.1`
+- Gradle: `9.9.1`
 - Groovy: `5.1.3`
 
 Run `sdk env install` to set up the environment.
