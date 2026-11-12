@@ -220,8 +220,7 @@ class ExcelBuilder extends BuilderSupport {
 					}
                     formats.put(format, style)
     			} catch (Exception e) {
-    				println "Error!"
-                    e.printStackTrace();
+    				log.error("Error creating cell format with attributes: ${attributes}", e)
     			}
     			break
             case "mergeCells":
