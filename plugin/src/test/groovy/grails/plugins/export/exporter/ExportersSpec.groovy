@@ -17,7 +17,6 @@ class ExportersSpec extends Specification {
         String title
         String author
         Integer pages
-        String xmlNodeName // the XML exporter reads it for the element name
     }
 
     List<Book> books = [
