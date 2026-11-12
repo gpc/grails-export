@@ -39,6 +39,10 @@ class DefaultXMLExporter extends AbstractExporter {
 				// Start building
 				build(rootElement, builder, data, fields, depth)	
 			}
+			else {
+				// No records: still a document, with an empty root element (there is no record class to name it after)
+				builder."${properCase(getParameters().get("xml.root")?.toString() ?: 'items')}"()
+			}
 			
 			writer.flush()
 		}
