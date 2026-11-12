@@ -1,19 +1,19 @@
 package grails.plugins.export.exporter
 
-import com.lowagie.text.Cell
-import com.lowagie.text.Document
-import com.lowagie.text.DocumentException
-import com.lowagie.text.Font
-import com.lowagie.text.FontFactory
-import com.lowagie.text.PageSize
-import com.lowagie.text.Paragraph
-import com.lowagie.text.Table
-import com.lowagie.text.pdf.BaseFont
-import com.lowagie.text.rtf.RtfWriter2
-import com.lowagie.text.HeaderFooter
-import com.lowagie.text.Phrase
-import com.lowagie.text.Element
-import com.lowagie.text.Rectangle
+import org.openpdf.text.Cell
+import org.openpdf.text.Document
+import org.openpdf.text.DocumentException
+import org.openpdf.text.Font
+import org.openpdf.text.FontFactory
+import org.openpdf.text.PageSize
+import org.openpdf.text.Paragraph
+import org.openpdf.text.Table
+import org.openpdf.text.pdf.BaseFont
+import org.openrtf.text.rtf.RtfWriter2
+import org.openpdf.text.HeaderFooter
+import org.openpdf.text.Phrase
+import org.openpdf.text.Element
+import org.openpdf.text.Rectangle
 import java.awt.Color
 
 

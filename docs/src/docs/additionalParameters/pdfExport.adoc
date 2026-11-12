@@ -5,17 +5,17 @@ PDF export supports some additional parameters which can be used just like the t
 
 |===
 | Parameter			| Default Value 						| Allowed Values 																	| Description			
-| pdf.encoding		| "Cp1252" (=latin 1)   				| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see http://itextdocs.lowagie.com/tutorial/fonts/index.php for further information about encodings																						| Specifies font encoding
+| pdf.encoding		| "Cp1252" (=latin 1)   				| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman") see the constants in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/pdf/BaseFont.html																						| Specifies font encoding
 | title.encoding	| "Cp1252" (=latin 1)   				| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman")	| Title font encoding
 | header.encoding	| "Cp1252" (=latin 1)   				| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman")	| Header font encoding
 | text.encoding		| "Cp1252" (=latin 1)   				| "Cp1250", "Cp1252" (=latin 2), "Cp1257", "Identity-H", "Identity-V", "MacRoman")	| Text font encoding
 | title.font.size	| "10"									| a number as String  																| Title font size
 | header.font.size	| "10"									| a number as String  																| Header font size
 | text.font.size	| "10"									| a number as String  																| Text font size
-| font.family		| com.lowagie.text.FontFactory.HELVETICA| constants defined in http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html 	| Global font family
-| title.font.family	| com.lowagie.text.FontFactory.HELVETICA| constants defined in http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html	| Title font family
-| header.font.family| com.lowagie.text.FontFactory.HELVETICA| constants defined in http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html	| Header font family
-| text.font.family	| com.lowagie.text.FontFactory.HELVETICA| constants defined in http://www.1t3xt.info/api/com/lowagie/text/FontFactory.html	| Text font family
+| font.family		| org.openpdf.text.FontFactory.HELVETICA| constants defined in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html 	| Global font family
+| title.font.family	| org.openpdf.text.FontFactory.HELVETICA| constants defined in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html	| Title font family
+| header.font.family| org.openpdf.text.FontFactory.HELVETICA| constants defined in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html	| Header font family
+| text.font.family	| org.openpdf.text.FontFactory.HELVETICA| constants defined in https://javadoc.io/doc/com.github.librepdf/openpdf/latest/org/openpdf/text/FontFactory.html	| Text font family
 | title.font.style	| "bold"								| "bold", "italic", "normal", "bolditalic"											| Title font style
 | header.font.style	| "bold"								| "bold", "italic", "normal", "bolditalic"											| Header font style
 | text.font.style	| "bold"								| "bold", "italic", "normal", "bolditalic"											| Text font style
