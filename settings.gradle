@@ -9,13 +9,21 @@ pluginManagement {
             mavenLocal()
         }
         maven { url = 'https://repo.grails.org/grails/restricted' }
+        maven {
+            // Grails 9 snapshots, which repo.grails.org does not serve
+            url = 'https://repository.apache.org/content/groups/snapshots'
+            content {
+                includeVersionByRegex('org[.]apache[.](grails|groovy).*', '.*', '.*-SNAPSHOT')
+            }
+            mavenContent { snapshotsOnly() }
+        }
     }
 
     // >>> grails-plugin-conventions (managed by grails-plugin-template files-sync, do not edit)
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith('config.')) {
-                useModule('org.grails.plugins.gradle:grails-plugin-conventions:1.0.0-RC5')
+                useModule('org.grails.plugins.gradle:grails-plugin-conventions:1.0.0-RC6')
             }
         }
     }
@@ -38,6 +46,19 @@ buildscript {
     }
 }
 // <<< grails-plugin-conventions
+
+buildscript {
+    repositories {
+        maven {
+            // Grails 9 snapshots, which repo.grails.org does not serve
+            url = 'https://repository.apache.org/content/groups/snapshots'
+            content {
+                includeVersionByRegex('org[.]apache[.](grails|groovy).*', '.*', '.*-SNAPSHOT')
+            }
+            mavenContent { snapshotsOnly() }
+        }
+    }
+}
 
 plugins {
     id 'com.gradle.common-custom-user-data-gradle-plugin' version '2.3'
@@ -79,5 +100,13 @@ dependencyResolutionManagement {
             mavenLocal()
         }
         maven { url = 'https://repo.grails.org/grails/restricted' }
+        maven {
+            // Grails 9 snapshots, which repo.grails.org does not serve
+            url = 'https://repository.apache.org/content/groups/snapshots'
+            content {
+                includeVersionByRegex('org[.]apache[.](grails|groovy).*', '.*', '.*-SNAPSHOT')
+            }
+            mavenContent { snapshotsOnly() }
+        }
     }
 }
