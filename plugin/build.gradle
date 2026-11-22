@@ -5,12 +5,6 @@ plugins {
     id 'config.testing'
 }
 
-// grails-plugin-conventions' config.compile turns invokedynamic off. Groovy 6 cannot generate classic call sites
-// without the optional groovy-callsite module (GROOVY-11158), and a plugin compiled with them does not load on
-// Grails 9: Groovy 6 has no CallSiteArray, so the plugin class fails to instantiate and Grails skips it.
-tasks.withType(GroovyCompile).configureEach {
-    groovyOptions.optimizationOptions.indy = true
-}
 
 version = projectVersion
 group = projectGroup
