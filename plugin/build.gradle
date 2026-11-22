@@ -5,7 +5,6 @@ plugins {
     id 'config.testing'
 }
 
-
 version = projectVersion
 group = projectGroup
 

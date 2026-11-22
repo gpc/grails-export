@@ -2,7 +2,6 @@ plugins {
     id 'config.example-app'
 }
 
-
 version = projectVersion
 group = 'app1'
 
