@@ -30,8 +30,14 @@ contributors:
   joasgarcia: "Joás Garcia"
   mirweb: "Mirko Weber"
 versions:
-  current: "7.1.0"
+  current: "9.0.0"
   previous:
+  - "9.0.0"
+  - "9.0.x"
+  - "8.1.0"
+  - "8.1.x"
+  - "8.0.0"
+  - "8.0.x"
   - "7.1.0"
   - "7.0.0"
   - "7.0.0-RC2"
